@@ -61,7 +61,18 @@ class PingClass {
     static void _ping_recv_cb(void *opt, void *pdata);
 
     IPAddress _dest;
-    ping_option _options;
+
+
+    typedef void(*ping_recv_function)(void* arg, void *pdata);
+    typedef void(*ping_sent_function)(void* arg, void *pdata);
+
+    struct ping_option {
+        int16_t count;
+        uint32_t ip;
+        uint32_t coarse_time;
+        ping_recv_function recv_function;
+        ping_sent_function sent_function;
+    } _options;
 
     static byte _expected_count, _errors, _success;
     static uint _min_time, _max_time;
